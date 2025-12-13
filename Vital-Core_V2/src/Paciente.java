@@ -3,9 +3,9 @@ import java.util.Date;
 public class Paciente extends Persona{
     //Atributos de Paciente
     private String numeroHistoriaClinica, tipoSangre, alergia;
-    private final Date fechaRegistro;
+    private final LocalDate fechaRegistro;
     //Constructor de Paciente
-    public Paciente(String id,String nombre, String apellido, LocalDate fechaNacimiento, String numeroHistoriaClinica, String tipoSangre, String alergia, Date fechaRegistro){
+    public Paciente(String id,String nombre, String apellido, LocalDate fechaNacimiento, String numeroHistoriaClinica, String tipoSangre, String alergia, LocalDate fechaRegistro){
         super(id,nombre,apellido,fechaNacimiento);
         this.numeroHistoriaClinica = numeroHistoriaClinica;
         this.tipoSangre = tipoSangre;
@@ -34,7 +34,7 @@ public class Paciente extends Persona{
     public void setAlergia(String alergia) {
         this.alergia = alergia;
     }
-    public Date getFechaRegistro() {
+    public LocalDate getFechaRegistro() {
         return fechaRegistro;
     }
 }
