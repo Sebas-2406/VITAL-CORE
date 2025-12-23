@@ -3,7 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package vital.core;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JOptionPane;
 /**
  *
  * @author HP
@@ -11,7 +16,7 @@ package vital.core;
 public class frmregistro extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmregistro.class.getName());
-
+    private HashMap<String, String> mapaUsuarios = new HashMap<>();
     /**
      * Creates new form frmregistro
      */
@@ -36,6 +41,7 @@ public class frmregistro extends javax.swing.JFrame {
         pContrasena1 = new javax.swing.JPasswordField();
         bRegistrarUsuario = new javax.swing.JButton();
         iRegistro = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -45,6 +51,12 @@ public class frmregistro extends javax.swing.JFrame {
         lRegistro.setText("REGISTRO");
 
         tNombre.setBorder(javax.swing.BorderFactory.createTitledBorder("Nombre"));
+        tNombre.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tNombreMouseClicked(evt);
+            }
+        });
+        tNombre.addActionListener(this::tNombreActionPerformed);
 
         tApellido.setBorder(javax.swing.BorderFactory.createTitledBorder("Apellido"));
 
@@ -56,9 +68,22 @@ public class frmregistro extends javax.swing.JFrame {
         pContrasena1.setBorder(javax.swing.BorderFactory.createTitledBorder("Contraseña"));
 
         bRegistrarUsuario.setText("REGISTRAR USUARIO");
+        bRegistrarUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bRegistrarUsuarioMouseClicked(evt);
+            }
+        });
         bRegistrarUsuario.addActionListener(this::bRegistrarUsuarioActionPerformed);
 
         iRegistro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/crear-cuenta.png"))); // NOI18N
+
+        jButton1.setText("Volver");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         javax.swing.GroupLayout pRegistroLayout = new javax.swing.GroupLayout(pRegistro);
         pRegistro.setLayout(pRegistroLayout);
@@ -68,7 +93,7 @@ public class frmregistro extends javax.swing.JFrame {
                 .addGap(28, 28, 28)
                 .addGroup(pRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(tApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(pRegistroLayout.createSequentialGroup()
                             .addComponent(cTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -77,26 +102,34 @@ public class frmregistro extends javax.swing.JFrame {
                         .addComponent(pContrasena1, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(30, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pRegistroLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(pRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(iRegistro)
-                    .addComponent(lRegistro))
+                    .addGroup(pRegistroLayout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lRegistro)))
                 .addGap(112, 112, 112))
         );
         pRegistroLayout.setVerticalGroup(
             pRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pRegistroLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(lRegistro)
+                .addGroup(pRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pRegistroLayout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(lRegistro))
+                    .addGroup(pRegistroLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButton1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(iRegistro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(tNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(tApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
+                .addGap(18, 18, 18)
                 .addComponent(pContrasena1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addGap(28, 28, 28)
                 .addGroup(pRegistroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cTipoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bRegistrarUsuario))
@@ -117,6 +150,22 @@ public class frmregistro extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void guardarEnCSV(){
+        try (java.io.FileWriter fw = new java.io.FileWriter("usuarios.csv");
+            java.io.PrintWriter pw = new java.io.PrintWriter(fw)) {
+        
+                pw.println("Usuario,Contrasena");
+        
+                for (java.util.Map.Entry<String, String> entry : mapaUsuarios.entrySet()) {
+                    pw.println(entry.getKey() + "," + entry.getValue());
+                }
+        
+                javax.swing.JOptionPane.showMessageDialog(this, "Usuario registrado y base de datos actualizada.");
+        } catch (java.io.IOException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar archivo: " + e.getMessage());
+        }
+    }
+    
     private void cTipoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cTipoUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cTipoUsuarioActionPerformed
@@ -125,28 +174,53 @@ public class frmregistro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_bRegistrarUsuarioActionPerformed
 
+    private void tNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tNombreActionPerformed
+
+    private void bRegistrarUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bRegistrarUsuarioMouseClicked
+
+        String nombre = tNombre.getText().trim();
+        String apellido = tApellido.getText().trim();
+        String tipo = cTipoUsuario.getSelectedItem().toString();
+        String password = pContrasena1.getPassword().toString(); 
+
+        if (nombre.isEmpty() || apellido.isEmpty() || password.isEmpty() || tipo.equals("Seleccionar")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Debe completar todos los campos.");
+            return;
+        }
+
+        String usuarioID = (nombre.substring(0, 1) + "." + apellido + "_" + tipo + "@gestionmedica.gob.ec").toLowerCase();
+
+        mapaUsuarios.put(usuarioID, password);
+
+        guardarEnCSV();
+    
+        tNombre.setText("");
+        tApellido.setText("");
+        pContrasena1.setText("");
+        cTipoUsuario.setSelectedIndex(0);
+    }//GEN-LAST:event_bRegistrarUsuarioMouseClicked
+
+    private void tNombreMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tNombreMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tNombreMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        frmlogin ventanaLogin = new frmlogin(); 
+        ventanaLogin.setVisible(true); 
+        ventanaLogin.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jButton1MouseClicked
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new frmregistro().setVisible(true));
     }
 
@@ -154,6 +228,7 @@ public class frmregistro extends javax.swing.JFrame {
     private javax.swing.JButton bRegistrarUsuario;
     private javax.swing.JComboBox<String> cTipoUsuario;
     private javax.swing.JLabel iRegistro;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel lRegistro;
     private javax.swing.JPasswordField pContrasena1;
     private javax.swing.JPanel pRegistro;

@@ -4,12 +4,20 @@
  */
 package vital.core;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author HP
  */
 public class frmlogin extends javax.swing.JFrame {
     
+    private HashMap<String, String> credenciales = new HashMap<>();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(frmlogin.class.getName());
 
     /**
@@ -17,6 +25,7 @@ public class frmlogin extends javax.swing.JFrame {
      */
     public frmlogin() {
         initComponents();
+        cargarDatosCSV();
     }
 
     /**
@@ -53,9 +62,19 @@ public class frmlogin extends javax.swing.JFrame {
         lcontrasena.setText("CONTRASEÑA");
 
         bIniciarsesion.setText("INICIAR SESIÓN");
+        bIniciarsesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bIniciarsesionMouseClicked(evt);
+            }
+        });
         bIniciarsesion.addActionListener(this::bIniciarsesionActionPerformed);
 
         bCrearCuenta.setText("CREAR CUENTA");
+        bCrearCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                bCrearCuentaMouseClicked(evt);
+            }
+        });
 
         tUsuario.addActionListener(this::tUsuarioActionPerformed);
 
@@ -68,27 +87,29 @@ public class frmlogin extends javax.swing.JFrame {
             .addGroup(pFondoLoginLayout.createSequentialGroup()
                 .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pFondoLoginLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(lUsuario)
-                        .addGap(28, 28, 28)
-                        .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pFondoLoginLayout.createSequentialGroup()
-                        .addGap(16, 16, 16)
-                        .addComponent(lcontrasena)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pFondoLoginLayout.createSequentialGroup()
-                                .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(bCrearCuenta)
-                                    .addComponent(bIniciarsesion))
-                                .addGap(63, 63, 63))))
-                    .addGroup(pFondoLoginLayout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(iLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pFondoLoginLayout.createSequentialGroup()
                         .addGap(135, 135, 135)
-                        .addComponent(lLogin)))
+                        .addComponent(lLogin))
+                    .addGroup(pFondoLoginLayout.createSequentialGroup()
+                        .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pFondoLoginLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(lcontrasena))
+                            .addGroup(pFondoLoginLayout.createSequentialGroup()
+                                .addGap(27, 27, 27)
+                                .addComponent(lUsuario)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(pContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pFondoLoginLayout.createSequentialGroup()
+                                    .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(bCrearCuenta)
+                                        .addComponent(bIniciarsesion))
+                                    .addGap(63, 63, 63))))))
                 .addContainerGap(46, Short.MAX_VALUE))
         );
         pFondoLoginLayout.setVerticalGroup(
@@ -139,9 +160,69 @@ public class frmlogin extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_pContrasenaActionPerformed
 
+    private void bIniciarsesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bIniciarsesionMouseClicked
+        String user = tUsuario.getText().trim().toLowerCase();
+        String pass = new String(pContrasena.getPassword());
+
+    if (credenciales.containsKey(user) && credenciales.get(user).equals(pass)) {
+        
+        String typeUser = "";
+        if (user.contains("_")) {
+            int posicionInicio = user.lastIndexOf("_") + 1;
+            int posicionFin = user.indexOf("@");
+        
+            typeUser = user.substring(posicionInicio, posicionFin);
+        }
+
+        switch (typeUser) {
+            case "doctor":
+                JOptionPane.showMessageDialog(this, "Bienvenido, Doctor. Sus consultas del día están listas.");
+                break;
+            case "paciente":
+                JOptionPane.showMessageDialog(this, "Hola. Aquí puedes revisar tus citas médicas y recetas.");
+                break;
+            case "farmaceutico":
+                JOptionPane.showMessageDialog(this, "Acceso concedido. Inventario de farmacia disponible.");
+                break;
+            default:
+                JOptionPane.showMessageDialog(this, "Bienvenido al sistema Vital-Core.");
+                break;
+        }
+        
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_bIniciarsesionMouseClicked
+
+    private void bCrearCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bCrearCuentaMouseClicked
+        frmregistro ventanaRegistro = new frmregistro(); 
+        ventanaRegistro.setVisible(true); 
+        ventanaRegistro.setLocationRelativeTo(null); 
+        this.dispose();
+    }//GEN-LAST:event_bCrearCuentaMouseClicked
+
     /**
      * @param args the command line arguments
      */
+    
+    private void cargarDatosCSV() {
+        File archivo = new File("usuarios.csv");
+        if (!archivo.exists()) return;
+
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            br.readLine(); // Salto de la cabecera (usuario,contraseña)
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length == 2) {
+                    credenciales.put(datos[0], datos[1]);
+                }
+            }
+        } catch (IOException e) {
+            System.err.println("Error al cargar: " + e.getMessage());
+        }
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
