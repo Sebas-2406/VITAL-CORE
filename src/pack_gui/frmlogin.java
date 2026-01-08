@@ -39,28 +39,34 @@ public class frmlogin extends javax.swing.JFrame {
 
         pFondoLogin = new javax.swing.JPanel();
         lLogin = new javax.swing.JLabel();
-        iLogin = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         lUsuario = new javax.swing.JLabel();
+        tUsuario = new javax.swing.JTextField();
         lcontrasena = new javax.swing.JLabel();
+        pContrasena = new javax.swing.JPasswordField();
         bIniciarsesion = new javax.swing.JButton();
         bCrearCuenta = new javax.swing.JButton();
-        tUsuario = new javax.swing.JTextField();
-        pContrasena = new javax.swing.JPasswordField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pFondoLogin.setBackground(new java.awt.Color(153, 153, 255));
+        pFondoLogin.setBackground(new java.awt.Color(0, 153, 255));
+        pFondoLogin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lLogin.setFont(new java.awt.Font("Lucida Sans", 1, 24)); // NOI18N
         lLogin.setText("LOGIN");
-
-        iLogin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login.png"))); // NOI18N
-        iLogin.setText("jLabel2");
+        pFondoLogin.add(lLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 10, -1, -1));
 
         lUsuario.setText("USUARIO");
 
+        tUsuario.addActionListener(this::tUsuarioActionPerformed);
+
         lcontrasena.setText("CONTRASEÑA");
 
+        pContrasena.addActionListener(this::pContrasenaActionPerformed);
+
+        bIniciarsesion.setBackground(new java.awt.Color(204, 204, 255));
         bIniciarsesion.setText("INICIAR SESIÓN");
         bIniciarsesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -69,6 +75,7 @@ public class frmlogin extends javax.swing.JFrame {
         });
         bIniciarsesion.addActionListener(this::bIniciarsesionActionPerformed);
 
+        bCrearCuenta.setBackground(new java.awt.Color(204, 204, 255));
         bCrearCuenta.setText("CREAR CUENTA");
         bCrearCuenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,130 +83,106 @@ public class frmlogin extends javax.swing.JFrame {
             }
         });
 
-        tUsuario.addActionListener(this::tUsuarioActionPerformed);
-
-        pContrasena.addActionListener(this::pContrasenaActionPerformed);
-
-        javax.swing.GroupLayout pFondoLoginLayout = new javax.swing.GroupLayout(pFondoLogin);
-        pFondoLogin.setLayout(pFondoLoginLayout);
-        pFondoLoginLayout.setHorizontalGroup(
-            pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pFondoLoginLayout.createSequentialGroup()
-                .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pFondoLoginLayout.createSequentialGroup()
-                        .addGap(125, 125, 125)
-                        .addComponent(iLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pFondoLoginLayout.createSequentialGroup()
-                        .addGap(135, 135, 135)
-                        .addComponent(lLogin))
-                    .addGroup(pFondoLoginLayout.createSequentialGroup()
-                        .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pFondoLoginLayout.createSequentialGroup()
-                                .addGap(16, 16, 16)
-                                .addComponent(lcontrasena))
-                            .addGroup(pFondoLoginLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addComponent(lUsuario)))
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(29, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lUsuario)
+                        .addGap(40, 40, 40)
+                        .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lcontrasena)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(pContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pFondoLoginLayout.createSequentialGroup()
-                                    .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(bCrearCuenta)
-                                        .addComponent(bIniciarsesion))
-                                    .addGap(63, 63, 63))))))
-                .addContainerGap(46, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(bIniciarsesion)
+                            .addComponent(pContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(bCrearCuenta))))
+                .addContainerGap(52, Short.MAX_VALUE))
         );
-        pFondoLoginLayout.setVerticalGroup(
-            pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pFondoLoginLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lLogin)
-                .addGap(9, 9, 9)
-                .addComponent(iLogin, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lUsuario)
                     .addComponent(tUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(pFondoLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lcontrasena)
                     .addComponent(pContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addGap(31, 31, 31)
                 .addComponent(bIniciarsesion)
                 .addGap(18, 18, 18)
-                .addComponent(bCrearCuenta)
-                .addGap(31, 31, 31))
+                .addComponent(bCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pFondoLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pFondoLogin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        pFondoLogin.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 370, 210));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/fondo_hospital.png"))); // NOI18N
+        pFondoLogin.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 530, 260));
+
+        getContentPane().add(pFondoLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void bIniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIniciarsesionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bIniciarsesionActionPerformed
-
-    private void tUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tUsuarioActionPerformed
 
     private void pContrasenaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pContrasenaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_pContrasenaActionPerformed
 
+    private void tUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tUsuarioActionPerformed
+
+    private void bCrearCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bCrearCuentaMouseClicked
+        frmregistro ventanaRegistro = new frmregistro();
+        ventanaRegistro.setVisible(true);
+        ventanaRegistro.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_bCrearCuentaMouseClicked
+
+    private void bIniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIniciarsesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_bIniciarsesionActionPerformed
+
     private void bIniciarsesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bIniciarsesionMouseClicked
         String user = tUsuario.getText().trim().toLowerCase();
         String pass = new String(pContrasena.getPassword());
 
-    if (credenciales.containsKey(user) && credenciales.get(user).equals(pass)) {
-        
-        String typeUser = "";
-        if (user.contains("_")) {
-            int posicionInicio = user.lastIndexOf("_") + 1;
-            int posicionFin = user.indexOf("@");
-        
-            typeUser = user.substring(posicionInicio, posicionFin);
-        }
+        if (credenciales.containsKey(user) && credenciales.get(user).equals(pass)) {
 
-        switch (typeUser) {
-            case "doctor":
+            String typeUser = "";
+            if (user.contains("_")) {
+                int posicionInicio = user.lastIndexOf("_") + 1;
+                int posicionFin = user.indexOf("@");
+
+                typeUser = user.substring(posicionInicio, posicionFin);
+            }
+
+            switch (typeUser) {
+                case "doctor":
                 JOptionPane.showMessageDialog(this, "Bienvenido, Doctor. Sus consultas del día están listas.");
                 break;
-            case "paciente":
+                case "paciente":
                 JOptionPane.showMessageDialog(this, "Hola. Aquí puedes revisar tus citas médicas y recetas.");
                 break;
-            case "farmaceutico":
+                case "farmaceutico":
                 JOptionPane.showMessageDialog(this, "Acceso concedido. Inventario de farmacia disponible.");
                 break;
-            default:
+                default:
                 JOptionPane.showMessageDialog(this, "Bienvenido al sistema Vital-Core.");
                 break;
-        }
-        
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.", "Error de Acceso", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_bIniciarsesionMouseClicked
-
-    private void bCrearCuentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_bCrearCuentaMouseClicked
-        frmregistro ventanaRegistro = new frmregistro(); 
-        ventanaRegistro.setVisible(true); 
-        ventanaRegistro.setLocationRelativeTo(null); 
-        this.dispose();
-    }//GEN-LAST:event_bCrearCuentaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -250,7 +233,8 @@ public class frmlogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bCrearCuenta;
     private javax.swing.JButton bIniciarsesion;
-    private javax.swing.JLabel iLogin;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lLogin;
     private javax.swing.JLabel lUsuario;
     private javax.swing.JLabel lcontrasena;
