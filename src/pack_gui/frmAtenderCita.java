@@ -4,6 +4,8 @@
  */
 package pack_gui;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -332,38 +334,59 @@ public class frmAtenderCita extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
+    //Validación de datos completados
     if (txtDiagnostico.getText().trim().isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Debe ingresar un diagnóstico");
         return;
     }
-    
+
     if (txtTratamiento.getText().trim().isEmpty()) {
         javax.swing.JOptionPane.showMessageDialog(this, "Debe ingresar el tratamiento");
         return;
     }
+
+    String archivoRecetas = "recetas.csv";
     
-    // Construir mensaje de confirmación
+    //Mensaje de Exito
     StringBuilder mensaje = new StringBuilder("CONSULTA REGISTRADA\n\n");
     mensaje.append("Gravedad: ").append(cmbGravedad.getSelectedItem()).append("\n");
     mensaje.append("Duración: ").append(spnDuracion.getValue()).append(" días\n");
-    
-    if (chkReceta.isSelected() && tablaMedicinas.getRowCount() > 0) {
-        mensaje.append("\nMedicamentos prescritos:\n");
-        javax.swing.table.DefaultTableModel modelo = 
-            (javax.swing.table.DefaultTableModel) tablaMedicinas.getModel();
-        for (int i = 0; i < modelo.getRowCount(); i++) {
-            mensaje.append("  • ").append(modelo.getValueAt(i, 0))
-                   .append(" - ").append(modelo.getValueAt(i, 1))
-                   .append(" (").append(modelo.getValueAt(i, 2)).append(")\n");
+
+    try (java.io.BufferedWriter bw = new java.io.BufferedWriter(new java.io.FileWriter(archivoRecetas, true))) {
+        
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tablaMedicinas.getModel();
+        
+        if (chkReceta.isSelected() && modelo.getRowCount() > 0) {
+            mensaje.append("\nMedicamentos prescritos:\n");
+            
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String med = modelo.getValueAt(i, 0).toString();
+                String dosis = modelo.getValueAt(i, 1).toString();
+                String indic = modelo.getValueAt(i, 2).toString();
+                
+                // Guardamos en el archivo recetas.csv
+                String linea = String.format("%s,%s,%s,%s,%s", 
+                        this.idCita, this.nombrePaciente, med, dosis, "Pendiente");
+                bw.write(linea);
+                bw.newLine();
+                
+                mensaje.append("  • ").append(med).append(" - ").append(dosis)
+                       .append(" (").append(indic).append(")\n");
+            }
         }
+        
+        //Marcamos la cita como atendida
+        citaAtendida = true;
+        estadoCita = "Atendida";
+
+        javax.swing.JOptionPane.showMessageDialog(this, mensaje.toString(), 
+            "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        dispose();
+
+    } catch (java.io.IOException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al guardar la receta: " + e.getMessage());
     }
-    
-    citaAtendida = true;
-    estadoCita = "Atendida";
-    
-    javax.swing.JOptionPane.showMessageDialog(this, mensaje.toString(), 
-        "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
-    dispose();
+   
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public boolean isCitaAtendida() {
